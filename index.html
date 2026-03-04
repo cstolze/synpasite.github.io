@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SynpaSite</title>
+    <link rel="stylesheet" href="style.css">
+    <script charset="utf-8" type="text/javascript" src="viz.js"></script>
+    <script charset="utf-8" type="text/javascript" src="full.js.opaque"></script>
+    <script charset="utf-8" type="text/javascript" src="utils.js"></script>
+    <script charset="utf-8" type="text/javascript" src="synpa_js.bc.js"></script>
+  </head>
+  <body>
+    <header>
+      <h1>A Process Algebra With Clocks and Priorities</h1>
+    </header>
+    <p>This webpage is an implementation of the Labelled Transition System of the SynpaTick process algebra.</p>
+    <p>Syntax:</p>
+    <table>
+      <tbody>
+	<tr>
+	  <td><i>ID</i> ::=</td>
+	  <td>[A-Za-z][A-Za-z0-9'_-]*</td>
+	</tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+	<tr>
+	  <td><i>ACT</i> ::=</td>
+	  <td><b>!</b><i>ID</i></td>
+	  <td>positive action</td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td><b>?</b><i>ID</i></td>
+	  <td>negative action</td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td><b>#</b><i>ID</i></td>
+	  <td>clock action</td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td><b>tau</b></td>
+	  <td>silent action</td>
+	</tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+	<tr>
+	  <td><i>P</i>, <i>Q</i> ::=</td>
+	  <td><b>0_[</b><i>ID</i><b>,</b> ...<b>,</b> <i>ID</i><b>]</b></td>
+	  <td>the zero process</td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td><i>ACT</i> <b>: [</b><i>ACT</i><b>,</b> ...<b>,</b> <i>ACT</i><b>]</b> <b>.</b> <i>P</i></td>
+	  <td>prefix</td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td><i>ACT</i> <b>.</b> <i>P</i></td>
+	  <td>Equivalent to <i>ACT</i> <b>: [ ]</b> <b>.</b> <i>P</i></td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td><i>P</i> <b>+</b> <i>Q</i></td>
+	  <td>sum</td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td><i>P</i> <b>|</b> <i>Q</i></td>
+	  <td>parallel</td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td><i>P</i> <b>\ [</b><i>ID</i><b>,</b> ...<b>,</b> <i>ID</i><b>]</b></td>
+	  <td>restriction</td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td><i>P</i> <b>/ [</b><i>ID</i><b>,</b> ...<b>,</b> <i>ID</i><b>]</b></td>
+	  <td>hiding</td>
+	</tr>
+	<tr>
+	  <td></td>
+	  <td><i>ID</i><b>[</b><i>ID</i><b>,</b> ...<b>,</b> <i>ID</i><b>]</b></td>
+	  <td>process name</td>
+	</tr>
+      </tbody>
+    </table>
+    <table>
+      <tbody>
+	<tr>
+	  <td><i>DECL</i> ::=</td>
+	  <td><i>ID</i> <b>:=</b> <i>P</i><b>;</b></td>
+	  <td>declaring a process</td>
+	</tr>
+	<tr>
+	  <td><i>PROC</i> ::=</td>
+	  <td><i>DECL</i> ... <i>DECL</i> <i>P</i></td>
+	  <td>full process</td>
+	</tr>
+      </tbody>
+    </table>
+    Notes on the syntax:
+    <ul>
+      <li>when you use a process name, you have to declare all its clocks between brackets, which should be the same list everytime you use the same name. When you declare a process, do not declare its clocks on the left-hand side of <b>:=</b>, for instance <b>one := #clock. one[clock];</b></li>
+      <li>lists can be empty. In processes, lists are comma-separated and bracketed</li>
+    </ul>
+    <select id="examples" onChange="change()">
+      <option value="" disabled selected hidden>Choose an example</option>
+      <option value="simple">Simple communication</option>
+      <option value="memory">Read/Write conflict</option>
+      <option value="keyboard">Locally synchronous, globally asynchronous</option>
+      <option value="abro">ABRO</option>
+    </select>
+    <textarea id="parsing" rows="15" class="inputarea"></textarea>
+    <button onclick="parse(document.getElementById('parsing').value)">Parse</button>
+    <div id="graph"></div>
+  </body>
+</html>

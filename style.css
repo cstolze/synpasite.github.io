@@ -1,0 +1,19 @@
+.clickme {
+    cursor: pointer;
+}
+
+i {
+    color: green;
+}
+
+b {
+    color: darkred;
+}
+
+.clickme polygon {
+    fill: yellow;
+}
+
+.inputarea {
+    width: 100%
+}
