@@ -35,9 +35,13 @@ getStr := ?enter:[?enter]. !str:[!str]. one1[c1] + ?key:[?key, ?enter]. #c1. get
 main := ?str:[?str]. one2[c2] + #c2:[?str]. main[c2];\n\
 getStr[c1] | main[c2]"
 
+const anbn = "an_bn := ?a.(?b : [!a]. 0_[] | an_bn[]) + tau : [?a]. 0_[];\n\
+\n\
+an_bn[]"
+
 const simple = "!a : [!a]. 0_[] | ?a : [?a]. 0_[]"
 
-const examples = { abro: abro, memory: memory, keyboard: keyboard, simple: simple };
+const examples = { abro: abro, memory: memory, keyboard: keyboard, simple: simple, anbn: anbn };
 
 function change() {
     const v = document.getElementById("examples").value;
